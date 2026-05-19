@@ -66,6 +66,13 @@
             font-weight: 700;
             color: var(--gold);
             text-decoration: none;
+            display: inline-block;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
         }
 
         .nav-links {
@@ -75,16 +82,21 @@
         }
 
         .nav-links a {
-            color: var(--cream);
+            color: #F0D080;
             text-decoration: none;
             font-weight: 700;
             font-size: 0.8rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            transition: color 0.2s;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.35s ease, filter 0.35s ease;
         }
 
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover {
+            color: var(--gold);
+            transform: scale(1.15);
+            filter: brightness(1.25);
+        }
 
         .hamburger {
             display: none;
@@ -112,10 +124,11 @@
                 radial-gradient(ellipse at 15% 60%, rgba(245,183,48,0.10) 0%, transparent 55%),
                 radial-gradient(ellipse at 85% 30%, rgba(86,23,39,0.6) 0%, transparent 55%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             text-align: center;
-            padding: 2rem;
+            padding: 0 2rem 4rem;
             position: relative;
             overflow: hidden;
         }
@@ -132,15 +145,26 @@
             position: relative;
             z-index: 1;
             max-width: 680px;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             will-change: transform, opacity;
         }
 
         .hero-logo {
-            width: min(260px, 65vw);
-            height: auto;
-            border-radius: 20px;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+            width: min(340px, 82vw);
+            height: calc(min(340px, 82vw) * 0.56);
+            object-fit: cover;
+            object-position: center 63%;
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            margin-top: 68px;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
         }
 
         .hero-tagline {
@@ -428,6 +452,18 @@
 
         .galeria-item:hover img { transform: scale(1.06); }
 
+        .galeria-zoom {
+            opacity: 0;
+            transform: scale(0.82);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+            transition-delay: var(--d, 0s);
+        }
+
+        .galeria-zoom.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         /* ─── ARMÁ TU PEDIDO ─────────────────────── */
         #armar-pedido {
             background: var(--white);
@@ -491,52 +527,64 @@
         .order-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem 0.75rem;
+            gap: 0.85rem;
+            padding: 0.55rem 0.75rem;
             border-radius: 10px;
-            cursor: pointer;
             transition: background 0.2s;
             user-select: none;
         }
 
-        .order-item:hover { background: var(--cream-dark); }
+        .order-item.has-qty { background: rgba(114,32,48,0.06); }
 
-        .order-item input[type="checkbox"] {
-            appearance: none;
-            width: 20px; height: 20px;
-            border: 2px solid var(--cream-dark);
-            border-radius: 6px;
-            cursor: pointer;
+        .qty-control {
+            display: flex;
+            align-items: center;
             flex-shrink: 0;
-            transition: all 0.2s;
-            position: relative;
+        }
+
+        .qty-btn {
+            width: 28px; height: 28px;
+            border: 2px solid var(--cream-dark);
             background: var(--white);
+            color: var(--brown-mid);
+            border-radius: 50%;
+            font-size: 1.1rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
         }
 
-        .order-item input[type="checkbox"]:checked {
-            background: var(--burgundy);
+        .qty-btn:hover {
             border-color: var(--burgundy);
+            color: var(--burgundy);
+            background: var(--cream);
         }
 
-        .order-item input[type="checkbox"]:checked::after {
-            content: '';
-            position: absolute;
-            left: 5px; top: 2px;
-            width: 6px; height: 10px;
-            border: 2px solid #fff;
-            border-top: none;
-            border-left: none;
-            transform: rotate(45deg);
+        .qty-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--brown);
+            transition: color 0.2s;
         }
 
-        .order-item span {
+        .order-item.has-qty .qty-value { color: var(--burgundy); }
+        .order-item.has-qty .qty-btn   { border-color: var(--burgundy); color: var(--burgundy); }
+
+        .order-item-label {
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--brown-mid);
             transition: color 0.2s;
         }
 
-        .order-item:has(input:checked) span { color: var(--burgundy); }
+        .order-item.has-qty .order-item-label { color: var(--burgundy); font-weight: 700; }
 
         .order-footer {
             display: flex;
@@ -834,12 +882,12 @@
 
 <!-- ─── HERO ──────────────────────────────────── -->
 <section class="hero">
+    <img
+        src="fd0aebdb-60c0-4deb-aebe-7185be596fd4.jpg"
+        alt="Luchito's panadería artesanal"
+        class="hero-logo"
+    >
     <div class="hero-content" id="hero-content">
-        <img
-            src="fd0aebdb-60c0-4deb-aebe-7185be596fd4.jpg"
-            alt="Luchito's panadería artesanal"
-            class="hero-logo"
-        >
         <p class="hero-tagline">
             Pan artesanal, pizzas y budines<br>
             hechos con las manos y el corazón
@@ -852,7 +900,7 @@
         </p>
         <div class="hero-buttons">
             <a href="#armar-pedido" class="btn-primary">
-                Armá tu pedido
+                Armar mi pedido
             </a>
             <a href="#productos" class="btn-secondary">
                 Ver el menú
@@ -928,21 +976,13 @@
             </div>
 
             <div class="producto-card reveal" style="--d:0.15s">
-                <div class="producto-no-img" style="background: linear-gradient(135deg, #C8A96E 0%, #8B6914 100%);">🍞</div>
+                <div class="producto-no-img" style="background: linear-gradient(135deg, #C8A96E 0%, #7A5510 100%);">🍞</div>
                 <div class="producto-body">
                     <span class="producto-tag">Artesanal</span>
-                    <div class="producto-name">Pan</div>
-                    <p class="producto-desc">Pan casero de miga tierna y corteza dorada. El olor solo ya vale el pedido.</p>
-                </div>
-            </div>
-
-            <div class="producto-card reveal" style="--d:0.25s">
-                <div class="producto-no-img" style="background: linear-gradient(135deg, #5C3D1E 0%, #3A2010 100%);">🧄</div>
-                <div class="producto-body">
-                    <span class="producto-tag">Especiales</span>
-                    <div class="producto-name">Panes saborizados</div>
-                    <p class="producto-desc">Pan con ingredientes que lo llevan a otro nivel. Perfectos solos o para acompañar.</p>
+                    <div class="producto-name">Panes</div>
+                    <p class="producto-desc">Pan casero de miga tierna y corteza dorada — también en versiones saborizadas para los que quieren algo distinto.</p>
                     <div class="producto-variants">
+                        <span class="variant-chip">Artesanal</span>
                         <span class="variant-chip">Ajo</span>
                         <span class="variant-chip">Queso</span>
                         <span class="variant-chip">Queso y ajo</span>
@@ -979,23 +1019,23 @@
             <div class="divider"></div>
         </div>
 
-        <div class="galeria-grid reveal">
-            <div class="galeria-item">
+        <div class="galeria-grid">
+            <div class="galeria-item galeria-zoom" style="--d:0s">
                 <img src="56b59ff9-873e-4a94-802b-0366c9e85e76.jpg" alt="Pizza artesanal" loading="lazy">
             </div>
-            <div class="galeria-item">
+            <div class="galeria-item galeria-zoom" style="--d:0.1s">
                 <img src="4d466faa-f36a-48f8-ab79-2f26da9be3e1.jpg" alt="Budín de chocolate" loading="lazy">
             </div>
-            <div class="galeria-item">
+            <div class="galeria-item galeria-zoom" style="--d:0.2s">
                 <img src="c22019ba-75d3-4cea-a522-779596cb4f99.jpg" alt="Pizza casera" loading="lazy">
             </div>
-            <div class="galeria-item">
+            <div class="galeria-item galeria-zoom" style="--d:0.3s">
                 <img src="edf6656a-b3b4-424b-ba47-1107d1e64b7f.jpg" alt="Pan de chocolate" loading="lazy">
             </div>
-            <div class="galeria-item">
+            <div class="galeria-item galeria-zoom" style="--d:0.4s">
                 <img src="d279fa67-2446-4c97-96de-07299401851f.jpg" alt="Pizza con salsa" loading="lazy">
             </div>
-            <div class="galeria-item">
+            <div class="galeria-item galeria-zoom" style="--d:0.5s">
                 <img src="f846ed0b-947d-444a-9fe1-652d8377db65.jpg" alt="Pizza artesanal detalle" loading="lazy">
             </div>
         </div>
@@ -1010,7 +1050,7 @@
 
         <div class="reveal">
             <span class="section-eyebrow">Pedidos directos</span>
-            <h2 class="section-title">Armá tu pedido</h2>
+            <h2 class="section-title">Armar mi pedido</h2>
             <div class="divider"></div>
         </div>
 
@@ -1023,58 +1063,98 @@
             <div class="order-category">
                 <h3>🍕 Pizzas</h3>
                 <div class="order-items">
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pizza de mozzarella">
-                        <span>Mozzarella</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pizza de cebolla">
-                        <span>Cebolla</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pizza mixta">
-                        <span>Mixta</span>
-                    </label>
+                    <div class="order-item" id="item-pizza-mozza">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pizza-mozza',-1)">−</button>
+                            <span class="qty-value" id="qty-pizza-mozza">0</span>
+                            <button class="qty-btn" onclick="changeQty('pizza-mozza',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pizza de mozzarella</span>
+                    </div>
+                    <div class="order-item" id="item-pizza-cebolla">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pizza-cebolla',-1)">−</button>
+                            <span class="qty-value" id="qty-pizza-cebolla">0</span>
+                            <button class="qty-btn" onclick="changeQty('pizza-cebolla',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pizza de cebolla</span>
+                    </div>
+                    <div class="order-item" id="item-pizza-mixta">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pizza-mixta',-1)">−</button>
+                            <span class="qty-value" id="qty-pizza-mixta">0</span>
+                            <button class="qty-btn" onclick="changeQty('pizza-mixta',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pizza mixta</span>
+                    </div>
                 </div>
             </div>
 
             <div class="order-category">
                 <h3>🍞 Panes</h3>
                 <div class="order-items">
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pan artesanal">
-                        <span>Pan artesanal</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pan de ajo">
-                        <span>Pan de ajo</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pan de queso">
-                        <span>Pan de queso</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Pan de queso y ajo">
-                        <span>Pan de queso y ajo</span>
-                    </label>
+                    <div class="order-item" id="item-pan-artesanal">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pan-artesanal',-1)">−</button>
+                            <span class="qty-value" id="qty-pan-artesanal">0</span>
+                            <button class="qty-btn" onclick="changeQty('pan-artesanal',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pan artesanal</span>
+                    </div>
+                    <div class="order-item" id="item-pan-ajo">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pan-ajo',-1)">−</button>
+                            <span class="qty-value" id="qty-pan-ajo">0</span>
+                            <button class="qty-btn" onclick="changeQty('pan-ajo',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pan de ajo</span>
+                    </div>
+                    <div class="order-item" id="item-pan-queso">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pan-queso',-1)">−</button>
+                            <span class="qty-value" id="qty-pan-queso">0</span>
+                            <button class="qty-btn" onclick="changeQty('pan-queso',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pan de queso</span>
+                    </div>
+                    <div class="order-item" id="item-pan-qyajo">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('pan-qyajo',-1)">−</button>
+                            <span class="qty-value" id="qty-pan-qyajo">0</span>
+                            <button class="qty-btn" onclick="changeQty('pan-qyajo',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Pan de queso y ajo</span>
+                    </div>
                 </div>
             </div>
 
             <div class="order-category">
                 <h3>🍫 Budines</h3>
                 <div class="order-items">
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Budín de chocolate">
-                        <span>Chocolate</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Budín de vainilla">
-                        <span>Vainilla</span>
-                    </label>
-                    <label class="order-item">
-                        <input type="checkbox" name="pedido" value="Budín marmolado">
-                        <span>Marmolado</span>
-                    </label>
+                    <div class="order-item" id="item-budin-choco">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('budin-choco',-1)">−</button>
+                            <span class="qty-value" id="qty-budin-choco">0</span>
+                            <button class="qty-btn" onclick="changeQty('budin-choco',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Budin de chocolate</span>
+                    </div>
+                    <div class="order-item" id="item-budin-vainilla">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('budin-vainilla',-1)">−</button>
+                            <span class="qty-value" id="qty-budin-vainilla">0</span>
+                            <button class="qty-btn" onclick="changeQty('budin-vainilla',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Budin de vainilla</span>
+                    </div>
+                    <div class="order-item" id="item-budin-marmolado">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty('budin-marmolado',-1)">−</button>
+                            <span class="qty-value" id="qty-budin-marmolado">0</span>
+                            <button class="qty-btn" onclick="changeQty('budin-marmolado',1)">+</button>
+                        </div>
+                        <span class="order-item-label">Budin marmolado</span>
+                    </div>
                 </div>
             </div>
 
@@ -1195,29 +1275,47 @@
     /* ── Scroll reveal ── */
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const el    = entry.target;
-            const delay = el.style.getPropertyValue('--d') || '0s';
-            el.style.transitionDelay = delay;
-            el.classList.add('visible');
-            revealObserver.unobserve(el);
+            const el = entry.target;
+            if (entry.isIntersecting) {
+                el.style.transitionDelay = el.style.getPropertyValue('--d') || '0s';
+                el.classList.add('visible');
+            } else {
+                el.style.transitionDelay = '0s';
+                el.classList.remove('visible');
+            }
         });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .galeria-zoom')
             .forEach(el => revealObserver.observe(el));
 
     /* ── Order builder ── */
+    function changeQty(id, delta) {
+        const span = document.getElementById('qty-' + id);
+        const newVal = Math.max(0, parseInt(span.textContent) + delta);
+        span.textContent = newVal;
+        document.getElementById('item-' + id).classList.toggle('has-qty', newVal > 0);
+    }
+
     function buildOrderMessage() {
-        const checked = [...document.querySelectorAll('input[name="pedido"]:checked')];
-        const note    = document.getElementById('order-note').value.trim();
+        const items = document.querySelectorAll('.order-item[id^="item-"]');
+        const note  = document.getElementById('order-note').value.trim();
+        const lines = [];
 
-        if (checked.length === 0) return null;
+        items.forEach(item => {
+            const id  = item.id.replace('item-', '');
+            const qty = parseInt(document.getElementById('qty-' + id).textContent);
+            if (qty > 0) {
+                const label = item.querySelector('.order-item-label').textContent;
+                lines.push(`• ${qty}x ${label}`);
+            }
+        });
 
-        let msg = '¡Hola! Quiero hacer un pedido 🥖\n\n';
-        checked.forEach(item => { msg += `• ${item.value}\n`; });
-        if (note) msg += `\nAclaración: ${note}`;
-        msg += '\n\n¿Consulto disponibilidad y precio? 🙏';
+        if (lines.length === 0) return null;
+
+        let msg = 'Hola! Quiero hacer un pedido:\n\n' + lines.join('\n');
+        if (note) msg += `\n\nAclaracion: ${note}`;
+        msg += '\n\nMe pueden decir disponibilidad y precio?';
         return msg;
     }
 
