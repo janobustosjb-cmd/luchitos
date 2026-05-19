@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luchito's — Panadería Artesanal · Lanús Oeste</title>
+    <link rel="icon" href="fd0aebdb-60c0-4deb-aebe-7185be596fd4.jpg" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --burgundy:       #722030;
+            --burgundy-dark:  #561727;
+            --burgundy-light: #8A2B3C;
+            --gold:           #F5B730;
+            --gold-dark:      #D4991A;
+            --cream:          #FAF3E0;
+            --cream-dark:     #F0E4C8;
+            --brown:          #2C1810;
+            --brown-mid:      #5C3D2E;
+            --white:          #FFFEF9;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--cream);
+            color: var(--brown);
+            overflow-x: hidden;
+        }
+
+        /* ─── PROGRESS BAR ───────────────────────── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold), var(--burgundy-light));
+            z-index: 200;
+            transition: width 0.1s linear;
+        }
+
+        /* ─── NAV ────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(86, 23, 39, 0.97);
+            backdrop-filter: blur(12px);
+            height: 68px;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* Dancing Script solo para el logo-marca */
+        .nav-logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ─── HERO ───────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            background-color: var(--burgundy);
+            background-image:
+                radial-gradient(ellipse at 15% 60%, rgba(245,183,48,0.10) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 30%, rgba(86,23,39,0.6) 0%, transparent 55%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(245,183,48,0.055) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+            will-change: transform, opacity;
+        }
+
+        .hero-logo {
+            width: min(260px, 65vw);
+            height: auto;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+        }
+
+        .hero-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+            color: var(--cream);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .hero-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--gold);
+            color: var(--burgundy-dark);
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 5px 20px rgba(245,183,48,0.35);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245,183,48,0.45);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: transparent;
+            color: var(--cream);
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.28);
+            transition: all 0.25s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* ─── SHARED ─────────────────────────────── */
+        section { padding: 6rem 2rem; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Playfair Display para títulos — artesanal sin cursiva agresiva */
+        .section-eyebrow {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--burgundy);
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            color: var(--brown);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-title.light { color: var(--gold); }
+
+        .divider {
+            width: 55px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--burgundy));
+            border-radius: 2px;
+            margin-bottom: 3rem;
+        }
+
+        /* ─── NOSOTROS ───────────────────────────── */
+        #nosotros { background: var(--white); }
+
+        .nosotros-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .nosotros-text p {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--brown-mid);
+            margin-bottom: 1.25rem;
+        }
+
+        .nosotros-text p strong { color: var(--burgundy); }
+
+        .quote {
+            border-left: 4px solid var(--gold);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--cream);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .quote p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--burgundy) !important;
+            margin-bottom: 0 !important;
+        }
+
+        .nosotros-img { position: relative; }
+
+        .nosotros-img::before {
+            content: '';
+            position: absolute;
+            top: -14px; right: -14px; bottom: 14px; left: 14px;
+            border: 3px solid var(--gold);
+            border-radius: 18px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .nosotros-img img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(44,24,16,0.2);
+            display: block;
+        }
+
+        /* ─── PRODUCTOS ──────────────────────────── */
+        #productos { background: var(--cream); }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .producto-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 22px rgba(44,24,16,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 45px rgba(44,24,16,0.16);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 225px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .producto-no-img {
+            width: 100%;
+            height: 225px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+        }
+
+        .producto-body { padding: 1.5rem 1.6rem; }
+
+        .producto-tag {
+            display: inline-block;
+            background: var(--cream);
+            color: var(--burgundy);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 0.7rem;
+            border: 1.5px solid var(--cream-dark);
+        }
+
+        .producto-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.65rem;
+            color: var(--brown);
+            margin-bottom: 0.45rem;
+            line-height: 1.15;
+        }
+
+        .producto-desc {
+            font-size: 0.9rem;
+            color: var(--brown-mid);
+            line-height: 1.65;
+        }
+
+        .producto-variants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1rem;
+        }
+
+        .variant-chip {
+            background: var(--cream-dark);
+            color: var(--burgundy);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.28rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        /* ─── GALERÍA ────────────────────────────── */
+        #galeria {
+            background: var(--burgundy);
+            background-image: radial-gradient(ellipse at 50% 0%, rgba(245,183,48,0.07) 0%, transparent 60%);
+        }
+
+        #galeria .section-eyebrow { color: rgba(250,243,224,0.5); }
+        #galeria .divider { background: linear-gradient(90deg, var(--gold), transparent); }
+
+        .galeria-grid {
+            columns: 3;
+            column-gap: 1rem;
+        }
+
+        .galeria-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .galeria-item:hover img { transform: scale(1.06); }
+
+        /* ─── ARMÁ TU PEDIDO ─────────────────────── */
+        #armar-pedido {
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #armar-pedido::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(114,32,48,0.04) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+        }
+
+        .pedido-intro {
+            max-width: 580px;
+            margin-bottom: 3rem;
+        }
+
+        .pedido-intro p {
+            font-size: 1.05rem;
+            color: var(--brown-mid);
+            line-height: 1.75;
+        }
+
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-category {
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1.5px solid var(--cream-dark);
+        }
+
+        .order-category h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--brown);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .order-item:hover { background: var(--cream-dark); }
+
+        .order-item input[type="checkbox"] {
+            appearance: none;
+            width: 20px; height: 20px;
+            border: 2px solid var(--cream-dark);
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            position: relative;
+            background: var(--white);
+        }
+
+        .order-item input[type="checkbox"]:checked {
+            background: var(--burgundy);
+            border-color: var(--burgundy);
+        }
+
+        .order-item input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px; top: 2px;
+            width: 6px; height: 10px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        .order-item span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--brown-mid);
+            transition: color 0.2s;
+        }
+
+        .order-item:has(input:checked) span { color: var(--burgundy); }
+
+        .order-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-width: 700px;
+        }
+
+        .order-note-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1.5px solid var(--cream-dark);
+            border-radius: 14px;
+            background: var(--cream);
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            color: var(--brown);
+            resize: vertical;
+            min-height: 90px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .order-note-field:focus { border-color: var(--gold); }
+        .order-note-field::placeholder { color: var(--brown-mid); opacity: 0.6; }
+
+        .order-send-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: #25D366;
+            color: #fff;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.25s;
+            box-shadow: 0 5px 18px rgba(37,211,102,0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebe5a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(37,211,102,0.42);
+        }
+
+        .btn-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.25s;
+            box-shadow: 0 5px 18px rgba(220,39,67,0.28);
+        }
+
+        .btn-instagram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(220,39,67,0.4);
+        }
+
+        .order-empty-msg {
+            display: none;
+            font-size: 0.88rem;
+            color: var(--burgundy);
+            font-weight: 700;
+            padding: 0.6rem 1rem;
+            background: rgba(114,32,48,0.07);
+            border-radius: 8px;
+            border-left: 3px solid var(--burgundy);
+        }
+
+        .order-empty-msg.show { display: block; }
+
+        .order-ig-note {
+            display: none;
+            font-size: 0.85rem;
+            color: var(--brown-mid);
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        .order-ig-note.show { display: block; }
+
+        /* ─── CONTACTO ───────────────────────────── */
+        #contacto {
+            background: linear-gradient(160deg, var(--cream) 0%, var(--cream-dark) 100%);
+            text-align: center;
+        }
+
+        .contacto-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contacto-desc {
+            font-size: 1.05rem;
+            color: var(--brown-mid);
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+        }
+
+        .contacto-desc strong { color: var(--burgundy); }
+
+        .contacto-buttons {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contacto-note {
+            font-size: 0.88rem;
+            color: var(--brown-mid);
+        }
+
+        .contacto-note strong { color: var(--burgundy-dark); }
+
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            background: var(--brown);
+            color: var(--cream);
+            padding: 3.5rem 2rem 2.5rem;
+            text-align: center;
+        }
+
+        /* Dancing Script solo aquí: logo de marca en footer */
+        .footer-logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-sub {
+            font-size: 0.88rem;
+            color: rgba(250,243,224,0.6);
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-ig {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            transition: opacity 0.2s;
+        }
+
+        .footer-ig:hover { opacity: 0.75; }
+
+        .footer-line {
+            width: 40px; height: 1px;
+            background: rgba(245,183,48,0.3);
+            margin: 0 auto 1.5rem;
+        }
+
+        .footer-copy {
+            font-size: 0.78rem;
+            color: rgba(250,243,224,0.32);
+        }
+
+        /* ─── SCROLL REVEAL ──────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible,
+        .reveal-left.visible,
+        .reveal-right.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ─── BACK TO TOP ────────────────────────── */
+        #back-top {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 46px; height: 46px;
+            background: var(--gold);
+            color: var(--burgundy-dark);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 90;
+        }
+
+        #back-top.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: none;
+        }
+
+        #back-top:hover { background: var(--gold-dark); }
+
+        /* ─── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 68px; left: 0; right: 0;
+                background: var(--burgundy-dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-top: 1px solid rgba(245,183,48,0.3);
+            }
+
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
+
+            .nosotros-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .nosotros-img::before { display: none; }
+            .nosotros-img img { height: 320px; }
+
+            .galeria-grid { columns: 2; }
+        }
+
+        @media (max-width: 500px) {
+            section { padding: 4rem 1.25rem; }
+            .galeria-grid { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+
+<!-- ─── NAV ───────────────────────────────────── -->
+<nav>
+    <a href="#" class="nav-logo">Luchito's</a>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#productos">Menú</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#armar-pedido">Pedido</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+
+<!-- ─── HERO ──────────────────────────────────── -->
+<section class="hero">
+    <div class="hero-content" id="hero-content">
+        <img
+            src="fd0aebdb-60c0-4deb-aebe-7185be596fd4.jpg"
+            alt="Luchito's panadería artesanal"
+            class="hero-logo"
+        >
+        <p class="hero-tagline">
+            Pan artesanal, pizzas y budines<br>
+            hechos con las manos y el corazón
+        </p>
+        <p class="hero-location">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Lanús Oeste · Buenos Aires
+        </p>
+        <div class="hero-buttons">
+            <a href="#armar-pedido" class="btn-primary">
+                Armá tu pedido
+            </a>
+            <a href="#productos" class="btn-secondary">
+                Ver el menú
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── NOSOTROS ───────────────────────────────── -->
+<section id="nosotros">
+    <div class="container">
+        <div class="nosotros-grid">
+
+            <div class="reveal-left">
+                <span class="section-eyebrow">Nuestra historia</span>
+                <h2 class="section-title">Hecho en casa,<br>con amor de verdad</h2>
+                <div class="divider"></div>
+                <p>
+                    En Luchito's hacemos todo <strong>artesanalmente</strong>, con ingredientes
+                    simples y mucho cariño. Cada masa que amasamos, cada budín que horneamos,
+                    cada pizza que sale del horno lleva el mismo amor que pondríamos en
+                    la comida de nuestra propia familia.
+                </p>
+                <div class="quote">
+                    <p>"La cocina casera tiene algo que ningún local puede igualar:<br>
+                    el sabor de lo hecho con las manos."</p>
+                </div>
+                <p>
+                    Somos un emprendimiento familiar de <strong>Lanús Oeste</strong>.
+                    Si buscás algo rico, honesto y hecho con ingredientes de calidad,
+                    llegaste al lugar indicado.
+                </p>
+            </div>
+
+            <div class="nosotros-img reveal-right">
+                <img
+                    src="edf6656a-b3b4-424b-ba47-1107d1e64b7f.jpg"
+                    alt="Budín de chocolate Luchito's"
+                    loading="lazy"
+                >
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── PRODUCTOS ──────────────────────────────── -->
+<section id="productos">
+    <div class="container">
+
+        <div class="reveal">
+            <span class="section-eyebrow">Lo que hacemos</span>
+            <h2 class="section-title">Nuestros productos</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="productos-grid">
+
+            <div class="producto-card reveal" style="--d:0.05s">
+                <img src="56b59ff9-873e-4a94-802b-0366c9e85e76.jpg" alt="Pizzas artesanales" class="producto-img" loading="lazy">
+                <div class="producto-body">
+                    <span class="producto-tag">Clásico</span>
+                    <div class="producto-name">Pizzas</div>
+                    <p class="producto-desc">Masa esponjosa hecha a mano con salsa de tomate casera. Crujiente por fuera, tierna por dentro.</p>
+                    <div class="producto-variants">
+                        <span class="variant-chip">Mozzarella</span>
+                        <span class="variant-chip">Cebolla</span>
+                        <span class="variant-chip">Mixta</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto-card reveal" style="--d:0.15s">
+                <div class="producto-no-img" style="background: linear-gradient(135deg, #C8A96E 0%, #8B6914 100%);">🍞</div>
+                <div class="producto-body">
+                    <span class="producto-tag">Artesanal</span>
+                    <div class="producto-name">Pan</div>
+                    <p class="producto-desc">Pan casero de miga tierna y corteza dorada. El olor solo ya vale el pedido.</p>
+                </div>
+            </div>
+
+            <div class="producto-card reveal" style="--d:0.25s">
+                <div class="producto-no-img" style="background: linear-gradient(135deg, #5C3D1E 0%, #3A2010 100%);">🧄</div>
+                <div class="producto-body">
+                    <span class="producto-tag">Especiales</span>
+                    <div class="producto-name">Panes saborizados</div>
+                    <p class="producto-desc">Pan con ingredientes que lo llevan a otro nivel. Perfectos solos o para acompañar.</p>
+                    <div class="producto-variants">
+                        <span class="variant-chip">Ajo</span>
+                        <span class="variant-chip">Queso</span>
+                        <span class="variant-chip">Queso y ajo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto-card reveal" style="--d:0.35s">
+                <img src="4d466faa-f36a-48f8-ab79-2f26da9be3e1.jpg" alt="Budines Luchito's" class="producto-img" loading="lazy">
+                <div class="producto-body">
+                    <span class="producto-tag">Dulce</span>
+                    <div class="producto-name">Budines</div>
+                    <p class="producto-desc">Húmedos, esponjosos, irresistibles. Para el desayuno, la merienda o el antojo de las 3am.</p>
+                    <div class="producto-variants">
+                        <span class="variant-chip">Chocolate</span>
+                        <span class="variant-chip">Vainilla</span>
+                        <span class="variant-chip">Marmolado</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── GALERÍA ────────────────────────────────── -->
+<section id="galeria">
+    <div class="container">
+
+        <div class="reveal">
+            <span class="section-eyebrow">Nuestros productos</span>
+            <h2 class="section-title light">Galería</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="galeria-grid reveal">
+            <div class="galeria-item">
+                <img src="56b59ff9-873e-4a94-802b-0366c9e85e76.jpg" alt="Pizza artesanal" loading="lazy">
+            </div>
+            <div class="galeria-item">
+                <img src="4d466faa-f36a-48f8-ab79-2f26da9be3e1.jpg" alt="Budín de chocolate" loading="lazy">
+            </div>
+            <div class="galeria-item">
+                <img src="c22019ba-75d3-4cea-a522-779596cb4f99.jpg" alt="Pizza casera" loading="lazy">
+            </div>
+            <div class="galeria-item">
+                <img src="edf6656a-b3b4-424b-ba47-1107d1e64b7f.jpg" alt="Pan de chocolate" loading="lazy">
+            </div>
+            <div class="galeria-item">
+                <img src="d279fa67-2446-4c97-96de-07299401851f.jpg" alt="Pizza con salsa" loading="lazy">
+            </div>
+            <div class="galeria-item">
+                <img src="f846ed0b-947d-444a-9fe1-652d8377db65.jpg" alt="Pizza artesanal detalle" loading="lazy">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ─── ARMÁ TU PEDIDO ─────────────────────────── -->
+<section id="armar-pedido">
+    <div class="container">
+
+        <div class="reveal">
+            <span class="section-eyebrow">Pedidos directos</span>
+            <h2 class="section-title">Armá tu pedido</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="pedido-intro reveal">
+            <p>Elegí lo que querés, agregá una aclaración si hace falta, y te mandamos directo al chat. Simple y rápido.</p>
+        </div>
+
+        <div class="order-grid reveal">
+
+            <div class="order-category">
+                <h3>🍕 Pizzas</h3>
+                <div class="order-items">
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pizza de mozzarella">
+                        <span>Mozzarella</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pizza de cebolla">
+                        <span>Cebolla</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pizza mixta">
+                        <span>Mixta</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="order-category">
+                <h3>🍞 Panes</h3>
+                <div class="order-items">
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pan artesanal">
+                        <span>Pan artesanal</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pan de ajo">
+                        <span>Pan de ajo</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pan de queso">
+                        <span>Pan de queso</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Pan de queso y ajo">
+                        <span>Pan de queso y ajo</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="order-category">
+                <h3>🍫 Budines</h3>
+                <div class="order-items">
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Budín de chocolate">
+                        <span>Chocolate</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Budín de vainilla">
+                        <span>Vainilla</span>
+                    </label>
+                    <label class="order-item">
+                        <input type="checkbox" name="pedido" value="Budín marmolado">
+                        <span>Marmolado</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="order-footer reveal">
+            <textarea
+                id="order-note"
+                class="order-note-field"
+                placeholder="¿Alguna aclaración? Cantidad, dirección, horario de entrega..."
+            ></textarea>
+            <div class="order-send-row">
+                <button class="btn-whatsapp" onclick="sendOrder('whatsapp')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Enviar por WhatsApp
+                </button>
+                <button class="btn-instagram" onclick="sendOrder('instagram')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    Enviar por Instagram
+                </button>
+            </div>
+            <p class="order-empty-msg" id="order-empty">Seleccioná al menos un producto para continuar.</p>
+            <p class="order-ig-note" id="ig-note">Tu pedido fue copiado al portapapeles. Se abre Instagram — pegalo en el chat de @luchitos.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ─── CONTACTO ───────────────────────────────── -->
+<section id="contacto">
+    <div class="container">
+        <div class="contacto-wrapper reveal">
+            <span class="section-eyebrow" style="text-align:center; display:block;">También podés escribirnos directo</span>
+            <h2 class="section-title" style="text-align:center;">Estamos en</h2>
+            <div class="divider" style="margin-left:auto; margin-right:auto;"></div>
+            <p class="contacto-desc">
+                Por <strong>WhatsApp</strong> o <strong>Instagram</strong> directamente,
+                sin armar pedido. Para consultas, presupuestos o simplemente para charlar.
+            </p>
+            <div class="contacto-buttons">
+                <a href="https://wa.me/5491164484035" class="btn-whatsapp" target="_blank" rel="noopener">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    +54 9 11 6448-4035
+                </a>
+                <a href="https://www.instagram.com/luchitos/" class="btn-instagram" target="_blank" rel="noopener">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    @luchitos
+                </a>
+            </div>
+            <p class="contacto-note">📍 <strong>Lanús Oeste, Buenos Aires</strong> · Pedidos con anticipación</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer>
+    <div class="footer-logo">Luchito's</div>
+    <p class="footer-sub">Panadería artesanal · Lanús Oeste, Buenos Aires</p>
+    <a href="https://www.instagram.com/luchitos/" class="footer-ig" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        @luchitos
+    </a>
+    <div class="footer-line"></div>
+    <p class="footer-copy">© 2026 Luchito's · Hecho con amor en Lanús</p>
+</footer>
+
+
+<!-- ─── BACK TO TOP ────────────────────────────── -->
+<button id="back-top" aria-label="Volver arriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+    </svg>
+</button>
+
+
+<script>
+    /* ── Nav toggle ── */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    /* ── Scroll: progress + parallax + back-top ── */
+    const progressBar = document.getElementById('progress-bar');
+    const backTop     = document.getElementById('back-top');
+    const heroContent = document.getElementById('hero-content');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total    = document.documentElement.scrollHeight - window.innerHeight;
+
+        // Progress bar
+        progressBar.style.width = ((scrolled / total) * 100) + '%';
+
+        // Hero parallax + fade
+        if (scrolled < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrolled * 0.32}px)`;
+            heroContent.style.opacity   = Math.max(0, 1 - scrolled / 520);
+        }
+
+        // Back to top
+        backTop.classList.toggle('show', scrolled > 400);
+    }, { passive: true });
+
+    /* ── Scroll reveal ── */
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el    = entry.target;
+            const delay = el.style.getPropertyValue('--d') || '0s';
+            el.style.transitionDelay = delay;
+            el.classList.add('visible');
+            revealObserver.unobserve(el);
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+            .forEach(el => revealObserver.observe(el));
+
+    /* ── Order builder ── */
+    function buildOrderMessage() {
+        const checked = [...document.querySelectorAll('input[name="pedido"]:checked')];
+        const note    = document.getElementById('order-note').value.trim();
+
+        if (checked.length === 0) return null;
+
+        let msg = '¡Hola! Quiero hacer un pedido 🥖\n\n';
+        checked.forEach(item => { msg += `• ${item.value}\n`; });
+        if (note) msg += `\nAclaración: ${note}`;
+        msg += '\n\n¿Consulto disponibilidad y precio? 🙏';
+        return msg;
+    }
+
+    function sendOrder(channel) {
+        const emptyMsg = document.getElementById('order-empty');
+        const igNote   = document.getElementById('ig-note');
+        const msg      = buildOrderMessage();
+
+        igNote.classList.remove('show');
+
+        if (!msg) {
+            emptyMsg.classList.add('show');
+            return;
+        }
+
+        emptyMsg.classList.remove('show');
+
+        if (channel === 'whatsapp') {
+            window.open('https://wa.me/5491164484035?text=' + encodeURIComponent(msg), '_blank');
+        } else {
+            navigator.clipboard.writeText(msg).catch(() => {});
+            igNote.classList.add('show');
+            setTimeout(() => window.open('https://www.instagram.com/luchitos/', '_blank'), 600);
+        }
+    }
+</script>
+
+</body>
+</html>
